@@ -22,6 +22,19 @@ router.get('/', (req, res) => {
         })
 });
 
+router.get('/:id', (req, res) => {
+    dbConnection('accounts')
+        .where({ id: req.params.id })
+        .first()
+        .then(account => {
+            if (account) {
+                res.status(200).json(account);
+            } else {
+                res.status(404).json({ message: 'Account not found' });
+            }
+        });
+});
+
 
 router.post('/', (req, res) => {
     const account = req.body;
